@@ -61,13 +61,14 @@ build_canvas = function(){
     order_of_canvas += '<br><br><br><center><button type="button" onClick="show_results(); trial_in_progress = 0;">Finish</button></center>';
     $("#canvas_order").html(order_of_canvas);
     showSlide('canvas_order');
+    var start = new Date().getTime();
 
     //Left canvas
     var canvas_l = document.getElementById("canvas_1");
     var ctx_l = canvas_l.getContext("2d");
 
     var particles_l = d3.range(experiment.num).map(function(i) {
-      return [Math.round(experiment.width*Math.random()), 0];
+      return [Math.round(experiment.width/2), 0];
     });
 
     var particle_colors_l = d3.range(experiment.num).map(function(i) {
@@ -79,7 +80,7 @@ build_canvas = function(){
     var ctx = canvas.getContext("2d");
 
     var particles = d3.range(experiment.num).map(function(i) {
-      return [Math.round(experiment.width*Math.random()), 0];
+      return [Math.round(experiment.width/2), 0];
     });
 
     var particle_colors = d3.range(experiment.num).map(function(i) {
@@ -91,7 +92,7 @@ build_canvas = function(){
     var ctx_r = canvas_r.getContext("2d");
 
     var particles_r = d3.range(experiment.num).map(function(i) {
-      return [Math.round(experiment.width*Math.random()), 0];
+      return [Math.round(experiment.width/2), 0];
     });
 
     var particle_colors_r = d3.range(experiment.num).map(function(i) {
@@ -128,7 +129,7 @@ build_canvas = function(){
           if (first_request) {
             first_request = false;
             last_timer_id = setInterval(request_anu_random, experiment.seconds_between_requests * 1000); // Every 5 seconds
-            id_1 = setInterval(step_1, 16);
+            id_1 = setInterval(step_1, 16); // about 60 per second.
             id_2 = setInterval(step_2, 16);
             id_q = setInterval(step_quantum, 16);
             // d3.timer(step_quantum);
@@ -175,8 +176,8 @@ build_canvas = function(){
           p[0] += 0; //x_change(getRandomIntInclusive(0, 3));
           p[1] += 0; //Math.round(2*Math.random()-1);
         }
-        if (p[0] < 0) p[0] = p[0] + experiment.width;
-        if (p[0] > experiment.width) p[0] = p[0] % experiment.width;
+        if (p[0] < 0) p[0] = 0; //p[0] + experiment.width;
+        if (p[0] > experiment.width) p[0] = experiment.width;//p[0] % experiment.width;
         if (p[1] < 0) p[1] = p[1] + experiment.height;
         if (p[1] > experiment.height) p[1] = p[1] % experiment.height;
         ctx_l.fillRect(p[0],p[1],experiment.ps,experiment.ps);
@@ -199,8 +200,8 @@ build_canvas = function(){
           p[0] += 0; //x_change(getRandomIntInclusive(0, 3));
           p[1] += 0; //Math.round(2*Math.random()-1);
         }
-        if (p[0] < 0) p[0] = p[0] + experiment.width;
-        if (p[0] > experiment.width) p[0] = p[0] % experiment.width;
+        if (p[0] < 0) p[0] = 0; //p[0] + experiment.width;
+        if (p[0] > experiment.width) p[0] = experiment.width;//p[0] % experiment.width;
         if (p[1] < 0) p[1] = p[1] + experiment.height;
         if (p[1] > experiment.height) p[1] = p[1] % experiment.height;
         ctx.fillRect(p[0],p[1],experiment.ps,experiment.ps);
@@ -213,7 +214,7 @@ build_canvas = function(){
       ctx_r.fillStyle = "rgba(0,0,0,0.2)";
       ctx_r.fillRect(0,0,experiment.width,experiment.height);
       for (var i = 0; i < experiment.num; i++) {
-        ctx_r.fillStyle = "rgba(255,0,0,.9)";////particle_colors_r[i]
+        ctx_r.fillStyle = "rgba(255,255,255,.9)";////particle_colors_r[i]
         p = particles_r[i];
         //p[0] += quantum_steps[i][right_index % experiment.planned_steps]; // Math.round(4*Math.random()-2);
         if (right_index < experiment.planned_steps) {
@@ -223,8 +224,8 @@ build_canvas = function(){
           p[0] += 0; //x_change(getRandomIntInclusive(0, 3));
           p[1] += 0; //Math.round(2*Math.random()-1);
         }
-        if (p[0] < 0) p[0] = p[0] + experiment.width;
-        if (p[0] > experiment.width) p[0] = p[0] % experiment.width;
+        if (p[0] < 0) p[0] = 0; //p[0] + experiment.width;
+        if (p[0] > experiment.width) p[0] = experiment.width;//p[0] % experiment.width;
         if (p[1] < 0) p[1] = p[1] + experiment.height;
         if (p[1] > experiment.height) p[1] = p[1] % experiment.height;
         ctx_r.fillRect(p[0],p[1],experiment.ps,experiment.ps);
@@ -237,6 +238,9 @@ build_canvas = function(){
 };
 
 store_response_and_move_on = function(x){
+    var end = new Date().getTime();
+    var time = end - start;
+    experiment.time_for_each_trial.push(time);
     experiment.selected_locations.push(x);
     if (x == experiment.quantum_locations[experiment.current_trial]) {
         experiment.count_correct_selections += 1;
@@ -261,11 +265,19 @@ store_response_and_move_on = function(x){
 
 
 show_results = function(){
-    results_html = "Here are the results <br>";
-    results_html += "Corrects " + String(experiment.count_correct_selections) + "<br>";
-    results_html += "Quantum placement sequence " + String(experiment.quantum_locations) + "<br>";
-    results_html += "Selected locations " + String(experiment.selected_locations) + "<br>";
-    results_html += "Stopped steps per trial (due to Network) " + String(experiment.wrong_steps_per_trial) + "<br>";
+    results_html = "Here are the results: <br><br>";
+    results_html += "  Corrects " + String(experiment.count_correct_selections) + " out of " + String(experiment.completed_trials) + "<br>";
+    results_html += "  Quantum placement sequence " + String(experiment.quantum_locations) + "<br>";
+    results_html += "  Selected locations " + String(experiment.selected_locations) + "<br>";
+    results_html += "  Stopped steps per trial (due to Network) " + String(experiment.wrong_steps_per_trial) + "<br>";
+    results_html += "  Number of dots per canvas " + String(experiment.num) + "<br>";
+    results_html += "  Shape size " + String(experiment.ps) + "<br>";
+    results_html += "  Height-width " + String(experiment.height) + "-" + String(experiment.width) + "<br>";
+    results_html += "  Steps per second " + String(experiment.steps_per_second) + "<br>";
+    results_html += "  Seconds between requests " + String(experiment.seconds_between_requests) + "<br>";
+    results_html += "  Trial length (seconds) " + String(experiment.trial_length) + "<br>";
+    results_html += "  Trial each trial took (seconds) " + String(experiment.time_for_each_trial) + "<br>";
+
     $("#results").html(results_html);
     showSlide('results');
 };
