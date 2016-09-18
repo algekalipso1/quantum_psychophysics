@@ -33,3 +33,6 @@ last_timer_id = '';
 id_1 = '';
 id_2 = '';
 id_q = '';
+
+// To keep track of whether trials are in progress.
+trial_in_progress = 0; // 0 if not, 1 if yes.

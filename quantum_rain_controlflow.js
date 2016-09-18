@@ -1,6 +1,35 @@
 
+document.addEventListener('keydown', function(event) {
+    if (String.fromCharCode(event.keyCode) == "1") {
+        // Used for the "Left" button.
+        if (trial_in_progress == 1) {
+            $('#left_b').click();
+        }
+    }
+    if (String.fromCharCode(event.keyCode) == "2") {
+        // Used for the "Left" button.
+        if (trial_in_progress == 1) {
+            $('#center_b').click();
+        }
+    }
+    if (String.fromCharCode(event.keyCode) == "3") {
+        // Used for the "Left" button.
+        if (trial_in_progress == 1) {
+            $('#right_b').click();
+        }
+    }
+    if (String.fromCharCode(event.keyCode) == " ") {
+        // Used for the "Left" button.
+        if (trial_in_progress == 0) {
+            $('#begin_b').click();
+        }
+    }
+}, true);
+
+
+
 instruction_html = 'Instructions: Find the odd one out. Use the keys 1, 2, 3 to select left, center and right, respectively. Use space bar to move to next slide.';
-instruction_html += '<br><br><center><button type="button" onClick="build_canvas()">Start</button></center>';
+instruction_html += '<br><br><center><button type="button" id="begin_b" onClick="build_canvas()">Start</button></center>';
 
 
 $("#instructions").html(instruction_html);
@@ -8,6 +37,7 @@ showSlide('instructions');
 
 build_canvas = function(){
     place_of_quantum_canvas = experiment.quantum_locations[experiment.current_trial]; //getRandomIntInclusive(0, 2);
+    trial_in_progress = 1;
     order_of_canvas = '<center>';
     if (place_of_quantum_canvas == 0) {
         order_of_canvas += '<canvas id="canvas_quantum" width="300" height="500"></canvas>';
@@ -25,10 +55,10 @@ build_canvas = function(){
         order_of_canvas += '<canvas id="canvas_quantum" width="300" height="500"></canvas>';
     }
     order_of_canvas += '</center>';
-    order_of_canvas += '<br><center><button type="button" onClick="store_response_and_move_on(0)">Left</button>';
-    order_of_canvas += '<button type="button" onClick="store_response_and_move_on(1)">Center</button>';
-    order_of_canvas += '<button type="button" onClick="store_response_and_move_on(2)">Right</button></center>';
-    order_of_canvas += '<br><br><br><center><button type="button" onClick="show_results()">Finish</button></center>';
+    order_of_canvas += '<br><center><button type="button" id="left_b" onClick="store_response_and_move_on(0)">Left</button>';
+    order_of_canvas += '<button type="button" id="center_b" onClick="store_response_and_move_on(1)">Center</button>';
+    order_of_canvas += '<button type="button" id="right_b" onClick="store_response_and_move_on(2)">Right</button></center>';
+    order_of_canvas += '<br><br><br><center><button type="button" onClick="show_results(); trial_in_progress = 0;">Finish</button></center>';
     $("#canvas_order").html(order_of_canvas);
     showSlide('canvas_order');
 
@@ -132,10 +162,10 @@ build_canvas = function(){
 
     // Classic random numbers on the fly
     function step_1() {
-      ctx_l.fillStyle = "rgba(255,255,255,0.2)";
+      ctx_l.fillStyle = "rgba(0,0,0,0.2)";
       ctx_l.fillRect(0,0,experiment.width,experiment.height);
       for (var i = 0; i < experiment.num; i++) {
-        ctx_l.fillStyle = "rgba(255,0,0,.9)";//particle_colors_l[i]
+        ctx_l.fillStyle = "rgba(255,255,255,.9)";//particle_colors_l[i]
         p = particles_l[i];
         //p[0] += x_change(getRandomIntInclusive(0, 3)); //Math.round(4*Math.random()-2);
         if (left_index < experiment.planned_steps) {
@@ -156,10 +186,10 @@ build_canvas = function(){
 
     // Classic random numbers every cylce.
     function step_2() {
-      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
       ctx.fillRect(0,0,experiment.width,experiment.height);
       for (var i = 0; i < experiment.num; i++) {
-        ctx.fillStyle = "rgba(0,255,0,.9)";//particle_colors[i]
+        ctx.fillStyle = "rgba(255,255,255,.9)";//particle_colors[i]
         p = particles[i];
         //p[0] += classy_steps[i][center_index % experiment.planned_steps]; // Math.round(4*Math.random()-2);
         if (center_index < experiment.planned_steps) {
@@ -180,10 +210,10 @@ build_canvas = function(){
 
     // Quantum Random numbers every cycle.
     function step_quantum() {
-      ctx_r.fillStyle = "rgba(255,255,255,0.2)";
+      ctx_r.fillStyle = "rgba(0,0,0,0.2)";
       ctx_r.fillRect(0,0,experiment.width,experiment.height);
       for (var i = 0; i < experiment.num; i++) {
-        ctx_r.fillStyle = "rgba(0,0,255,.9)";////particle_colors_r[i]
+        ctx_r.fillStyle = "rgba(255,0,0,.9)";////particle_colors_r[i]
         p = particles_r[i];
         //p[0] += quantum_steps[i][right_index % experiment.planned_steps]; // Math.round(4*Math.random()-2);
         if (right_index < experiment.planned_steps) {
@@ -222,6 +252,7 @@ store_response_and_move_on = function(x){
     clearInterval(id_2);
     clearInterval(id_q);
     if (experiment.completed_trials >= experiment.total_number_of_trials) {
+        trial_in_progress = 0;
         show_results();
     } else {
         build_canvas();
