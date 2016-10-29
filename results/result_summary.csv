@@ -1,0 +1,27 @@
+Date,State,Dose(s),T=(minutes),# Trials,Correct,Percent correct,Participant,Requests / Second,"Network (interruption-free trials: perfect = 100%, ok > 90%, poor < 90%)",Notes
+17/sept/2016,Alcohol,2 beers,60,100,35,35,S,0.625,ok,
+18/sept/2016,Sober,0,0,30,7,23.3333333333,S,0.5,perfect,
+18/sept/2016,Sober,0,0,30,7,23.3333333333,A,0.5,perfect,
+18/sept/2016,2C-B,20 mg,75,30,11,36.6666666667,A,0.5,ok,
+18/sept/2016,2C-B,20 mg,135,30,11,36.6666666667,A,0.5,ok,
+18/sept/2016,2C-B,20 mg,135,30,7,23.3333333333,A,0.5,ok,
+18/sept/2016,2C-B,20 mg,135,30,6,20,A,1,ok,
+18/sept/2016,2C-B,20 mg,180,30,13,43.3333333333,A,1,ok,
+18/sept/2016,2C-B,20 mg,180,30,10,33.3333333333,A,1,ok,Removed trailing
+18/sept/2016,2C-B,20 mg,180,30,6,20,A,1,ok,Removed trailing
+19/sept/2016,DMT,10 mg,1,30,7,23.3333333333,B,1,poor,
+9/oct/2016,Sober,0,0,30,8,26.6666666667,B,1,poor,
+9/oct/2016,DMT,5 mg,1,30,8,26.6666666667,B,1,poor,
+15/oct/2016,2C-B,20mg,75,30,7,23.3333333333,A,1,poor,
+15/oct/2016,2C-B,20 mg,83,30,8,26.6666666667,A,1,poor,Used square sized 1x1px
+15/oct/2016,2C-B,20 mg,86,5,2,40,A,0.625,perfect,Used square sized 3x3px
+19/oct/2016,LSD,100μg,10,30,12,40,A,0.625,perfect,
+19/oct/2016,LSD,100μg,79,30,14,46.6666666667,A,0.625,ok,
+19/oct/2016,LSD,100μg,93,30,8,26.6666666667,A,0.625,poor,
+19/oct/2016,LSD,100μg,160,30,11,36.6666666667,A,0.625,perfect,
+19/oct/2016,LSD+(2C-B),100μg+(15mg),188+(8),30,8,26.6666666667,A,0.625,ok,
+19/oct/2016,LSD+(2C-B),100μg+(15mg),195+(15),30,9,30,A,0.625,poor,Used square sized 3x3px
+19/oct/2016,LSD+(2C-B),100μg+(15mg),200+(20),5,1,20,A,0.625,ok,Used square sized 3x3px
+19/oct/2016,LSD+(2C-B),100μg+(15mg),201+(21),5,2,40,A,0.625,poor,Used square sized 3x3px
+19/oct/2016,LSD+(2C-B),100μg+(15mg),252+(72),30,7,23.3333333333,A,0.625,perfect,Used square sized 3x3px
+20/oct/2016,LSD+(2C-B),100μg+(15mg),748+(568),30,13,43.3333333333,A,0.625,perfect,Used square sized 3x3px
