@@ -1,17 +1,17 @@
 var experiment = {
     num: 1, // Number of points per canvas
-    ps: 10, // Point size in pixels
+    ps: 3, // Point size in pixels
     width: 300, // width of canvas
     height: 500, // height of canvas
     steps_per_second: 60, // measured steps per second using the d3.timer function (could also use setInterval)
     seconds_between_requests: 1.6, // The number of seconds that pass between requests.
-    trial_length: 20, // In seconds
+    trial_length: 10, // In seconds
     quantum_locations: [],
     selected_locations: [],
     count_correct_selections: 0,
     completed_trials: 0,
     wrong_steps_per_trial: [], // This keeps track of the number of times that each trials went wrong (network didn't respond in time.)
-    total_number_of_trials: 100, // This is the variable that determines how many times the canvas is randomized. (number of datapoints).
+    total_number_of_trials: 30, // This is the variable that determines how many times the canvas is randomized. (number of datapoints).
     time_for_each_trial: [],
     // Below: Variables for each trial. Reset any time you start a new trial.
     request_number: 0,

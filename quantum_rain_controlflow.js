@@ -270,6 +270,7 @@ show_results = function(){
     results_html += "  Quantum placement sequence " + String(experiment.quantum_locations) + "<br>";
     results_html += "  Selected locations " + String(experiment.selected_locations) + "<br>";
     results_html += "  Stopped steps per trial (due to Network) " + String(experiment.wrong_steps_per_trial) + "<br>";
+    results_html += "  Size of the squares: " + String(experiment.ps) + "<br>";
     results_html += "  Number of dots per canvas " + String(experiment.num) + "<br>";
     results_html += "  Shape size " + String(experiment.ps) + "<br>";
     results_html += "  Height-width " + String(experiment.height) + "-" + String(experiment.width) + "<br>";
